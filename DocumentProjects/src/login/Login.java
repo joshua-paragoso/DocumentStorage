@@ -14,8 +14,10 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import home.Home;
 
-public class login {
+
+public class Login {
 
 	private JFrame frame;
 	private JTextField username;
@@ -28,7 +30,7 @@ public class login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					login window = new login();
+					Login window = new Login();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +42,7 @@ public class login {
 	/**
 	 * Create the application.
 	 */
-	public login() {
+	public Login() {
 		initialize();
 	}
 
@@ -85,9 +87,19 @@ public class login {
 					JOptionPane.showMessageDialog(null, "Please enter username and password");
 				}else if(username.getText().equals("admin") && password.getText().contentEquals("12345")){
 					JOptionPane.showMessageDialog(null, "login success");
+					Home home = new Home();
+					home.setVisible(true);
+				    setVisble(false);
+				    
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "login failed. Retry");
 				}
+			}
+
+			private void setVisble(boolean b) {
+				// TODO Auto-generated method stub
+				
 			} 
 		
 		});
