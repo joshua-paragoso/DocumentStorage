@@ -85,7 +85,7 @@ public class Login {
 				// TODO Auto-generated method stub
 				if( username.getText().isEmpty() || password.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please enter username and password");
-				}else if(username.getText().equals("admin") && password.getText().contentEquals("12345")){
+				}else if(username.getText().equals("joshua") && password.getText().contentEquals("gears114")){
 					JOptionPane.showMessageDialog(null, "login success");
 					Home home = new Home();
 					home.setVisible(true);
