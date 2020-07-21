@@ -28,6 +28,9 @@ public class Login {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			/*
+			 * shows the login in frame
+			 */
 			public void run() {
 				try {
 					Login window = new Login();
@@ -50,39 +53,47 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		//JFrame
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Login");
-		lblNewLabel.setBounds(198, 24, 61, 16);
-		frame.getContentPane().add(lblNewLabel);
+		//Login label
+		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setBounds(198, 24, 61, 16);
+		frame.getContentPane().add(lblLogin);
 		
+		//Username label
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setBounds(89, 116, 73, 16);
 		frame.getContentPane().add(lblUsername);
 		
+		//Username textField
 		username = new JTextField();
 		username.setBounds(161, 111, 130, 26);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
 		
+		//Password label
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(89, 167, 73, 21);
 		frame.getContentPane().add(lblPassword);
 	    
+		//PasswordField
 		password = new JPasswordField();
 		password.setBounds(161, 164, 130, 26);
 		frame.getContentPane().add(password);
 		password.setColumns(10);
 		
+		//Login
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		
 				if( username.getText().isEmpty() || password.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please enter username and password");
 				}else if(username.getText().equals("joshua") && password.getText().contentEquals("gears114")){
@@ -98,8 +109,6 @@ public class Login {
 			}
 
 			private void setVisble(boolean b) {
-				// TODO Auto-generated method stub
-				
 			} 
 		
 		});
