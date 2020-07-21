@@ -31,12 +31,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
 
 public class Home extends JFrame {
 	
 	//JFile Choosers
 	private final JFileChooser openFileChooser; 
 	private BufferedImage originalBI;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -60,9 +64,8 @@ public class Home extends JFrame {
 	public Home() {
 		
 		openFileChooser = new JFileChooser();
-		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu"));
-//		openFileChooser.setFileFilter(new FileNameExtensionFilter("PNG images, png"));
-//		
+		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 400);
 		getContentPane().setLayout(null);
@@ -73,14 +76,23 @@ public class Home extends JFrame {
 		
 		JButton btnOpenFile = new JButton("Open file");
 		btnOpenFile.addActionListener(new ActionListener() {
+			
+			/*
+			 * when btnOpenFile is pressed
+			 */
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = openFileChooser.showOpenDialog(null);
 				
+				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
+						//find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
-						messageLabel.setText("Image file successfully loaded");
+						
+						//print out that file was found
+						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
 					}catch (IOException ioe) {
+						//
 						messageLabel.setText("File find fail");
 					}
 				}else {
@@ -90,6 +102,15 @@ public class Home extends JFrame {
 		});
 		btnOpenFile.setBounds(6, 22, 117, 29);
 		getContentPane().add(btnOpenFile);
+		
+		//scrollPane for JTable
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(45, 63, 359, 212);
+		getContentPane().add(scrollPane);
+		
+		//JTable
+		table = new JTable();
+		scrollPane.setViewportView(table);
 		
 		
 	}
