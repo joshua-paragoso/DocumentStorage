@@ -74,7 +74,7 @@ public class Home extends JFrame {
 		messageLabel.setBounds(135, 23, 285, 24);
 		getContentPane().add(messageLabel);
 		
-		JButton btnOpenFile = new JButton("Open file");
+		JButton btnOpenFile = new JButton("Upload file");
 		btnOpenFile.addActionListener(new ActionListener() {
 			
 			/*
