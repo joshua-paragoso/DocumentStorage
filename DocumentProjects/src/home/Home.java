@@ -63,6 +63,9 @@ public class Home extends JFrame {
 	 */
 	public Home() {
 		
+		String [] column = {"FileName"};
+		JScrollPane scrollPane = new JScrollPane();
+		
 		openFileChooser = new JFileChooser();
 		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
 
@@ -70,7 +73,7 @@ public class Home extends JFrame {
 		setBounds(100, 100, 450, 400);
 		getContentPane().setLayout(null);
 		
-		JLabel messageLabel = new JLabel("New label");
+		JLabel messageLabel = new JLabel(" ");
 		messageLabel.setBounds(135, 23, 285, 24);
 		getContentPane().add(messageLabel);
 		
@@ -82,7 +85,10 @@ public class Home extends JFrame {
 			 */
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = openFileChooser.showOpenDialog(null);
+				//scrollPane for JTable
 				
+				scrollPane.setBounds(45, 63, 359, 212);
+				getContentPane().add(scrollPane);
 				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
@@ -91,6 +97,13 @@ public class Home extends JFrame {
 						
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
+						Object[][] data = {
+					            {openFileChooser.getSelectedFile().getName() }
+					            };
+						//JTable
+						table = new JTable(data, column);
+						scrollPane.setViewportView(table);
+						
 					}catch (IOException ioe) {
 						//
 						messageLabel.setText("File find fail");
@@ -100,18 +113,11 @@ public class Home extends JFrame {
 				}
 			}
 		});
-		btnOpenFile.setBounds(6, 22, 117, 29);
-		getContentPane().add(btnOpenFile);
 		
-		//scrollPane for JTable
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(45, 63, 359, 212);
-		getContentPane().add(scrollPane);
-		
-		//JTable
-		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		
+		btnOpenFile.setBounds(6, 22, 117, 29);
+		getContentPane().add(btnOpenFile);
+			
 	}
 }
