@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import java.awt.Scrollbar;
 import javax.swing.JScrollPane;
@@ -63,32 +64,44 @@ public class Home extends JFrame {
 	 */
 	public Home() {
 		
-		String [] column = {"FileName"};
+//		String [] column = {"FileName"};
+//		Object [][]data = {};
 		JScrollPane scrollPane = new JScrollPane();
+		DefaultTableModel tableModel = new DefaultTableModel();
+		tableModel.addColumn("FileName");
+		//Display empty table
+//		table = new JTable(data, column);
+		table = new JTable(tableModel);
+		scrollPane.setViewportView(table);
 		
+		int count = 0;
+		
+		//Create JFileChooser
 		openFileChooser = new JFileChooser();
+		
+		//Set directory to Desktop
 		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
 
+		//Set bounds of
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 400);
 		getContentPane().setLayout(null);
 		
+		//Display label which will indicate what file will be uploaded
 		JLabel messageLabel = new JLabel(" ");
 		messageLabel.setBounds(135, 23, 285, 24);
 		getContentPane().add(messageLabel);
 		
-		JButton btnOpenFile = new JButton("Upload file");
-		btnOpenFile.addActionListener(new ActionListener() {
+		//Upload button
+		JButton btnUploadFile = new JButton("Upload file");
+		btnUploadFile.addActionListener(new ActionListener() {
 			
 			/*
 			 * when btnOpenFile is pressed
 			 */
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = openFileChooser.showOpenDialog(null);
-				//scrollPane for JTable
 				
-				scrollPane.setBounds(45, 63, 359, 212);
-				getContentPane().add(scrollPane);
 				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
@@ -97,27 +110,40 @@ public class Home extends JFrame {
 						
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
-						Object[][] data = {
-					            {openFileChooser.getSelectedFile().getName() }
-					            };
-						//JTable
-						table = new JTable(data, column);
-						scrollPane.setViewportView(table);
 						
+						//Added files name to data[][]
+						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
+						 
+						//scrollPane for JTable
+						scrollPane.setBounds(45, 63, 359, 212);
+						getContentPane().add(scrollPane);
+						 	
+//						scrollPane.setViewportView(table);
+		
 					}catch (IOException ioe) {
-						//
+						//if file find fails
 						messageLabel.setText("File find fail");
 					}
 				}else {
+					//if no files were chosen
 					messageLabel.setText("No file chosen!");
 				}
 			}
 		});
 		
-		scrollPane.setViewportView(table);
+		//Upload button
+		btnUploadFile.setBounds(6, 22, 117, 29);
+		getContentPane().add(btnUploadFile);
 		
-		btnOpenFile.setBounds(6, 22, 117, 29);
-		getContentPane().add(btnOpenFile);
-			
+		//scrollPane for JTable
+		scrollPane.setBounds(45, 63, 359, 212);
+		getContentPane().add(scrollPane);
+		
+		
+		
+		
+		
+	
+		
 	}
 }
