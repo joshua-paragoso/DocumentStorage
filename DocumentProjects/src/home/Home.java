@@ -138,12 +138,6 @@ public class Home extends JFrame {
 		//scrollPane for JTable
 		scrollPane.setBounds(45, 63, 359, 212);
 		getContentPane().add(scrollPane);
-		
-		
-		
-		
-		
 	
-		
 	}
 }
