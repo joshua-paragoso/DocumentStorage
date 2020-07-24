@@ -1,0 +1,3 @@
+CREATE TABLE FILES (
+fileName VARCHAR(45)
+);
