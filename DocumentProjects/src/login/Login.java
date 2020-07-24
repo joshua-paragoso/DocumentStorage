@@ -33,7 +33,10 @@ public class Login {
 			 */
 			public void run() {
 				try {
+					//Initialize Login window
 					Login window = new Login();
+					
+					//Set login window to visible
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +57,7 @@ public class Login {
 	 */
 	private void initialize() {
 		
-		//JFrame
+		//Initialize JFrame
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,31 +90,42 @@ public class Login {
 		frame.getContentPane().add(password);
 		password.setColumns(10);
 		
-		//Login
+		//Login button
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-		
+				
+				//if username space is empty
 				if( username.getText().isEmpty() || password.getText().isEmpty()) {
+					//display message
 					JOptionPane.showMessageDialog(null, "Please enter username and password");
+				
+				//if username and password match
 				}else if(username.getText().equals("joshua") && password.getText().contentEquals("gears114")){
+					//display success message
 					JOptionPane.showMessageDialog(null, "login success");
+					
+					//initialize Home object
 					Home home = new Home();
+					
+					//set Home window to visible 
 					home.setVisible(true);
 				    setVisble(false);
-				    
-					
+				     			
 				}else {
+					//display login failure message
 					JOptionPane.showMessageDialog(null, "login failed. Retry");
 				}
 			}
-
+  
 			private void setVisble(boolean b) {
 			} 
 		
 		});
+		
+		//set bounds 
 		btnLogin.setBounds(161, 221, 117, 29);
 		frame.getContentPane().add(btnLogin);
 	}
