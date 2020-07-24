@@ -64,17 +64,19 @@ public class Home extends JFrame {
 	 */
 	public Home() {
 		
-//		String [] column = {"FileName"};
-//		Object [][]data = {};
+
+		//JScrollPane 
 		JScrollPane scrollPane = new JScrollPane();
+		
+		//Default Table Model
 		DefaultTableModel tableModel = new DefaultTableModel();
+		
+		//Label tableModel column as FileName
 		tableModel.addColumn("FileName");
+		
 		//Display empty table
-//		table = new JTable(data, column);
 		table = new JTable(tableModel);
 		scrollPane.setViewportView(table);
-		
-		int count = 0;
 		
 		//Create JFileChooser
 		openFileChooser = new JFileChooser();
@@ -118,8 +120,6 @@ public class Home extends JFrame {
 						scrollPane.setBounds(45, 63, 359, 212);
 						getContentPane().add(scrollPane);
 						 	
-//						scrollPane.setViewportView(table);
-		
 					}catch (IOException ioe) {
 						//if file find fails
 						messageLabel.setText("File find fail");
