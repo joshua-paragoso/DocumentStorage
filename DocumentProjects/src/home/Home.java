@@ -35,7 +35,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
-
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 public class Home extends JFrame {
 	
 	//JFile Choosers
@@ -43,10 +49,15 @@ public class Home extends JFrame {
 	private BufferedImage originalBI;
 	private JTable table;
 
+	public static String driver = "com.mysql.cj.jdbc.Driver"; 
+	public static String url = "jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false";
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -116,6 +127,9 @@ public class Home extends JFrame {
 						//Added files name to data[][]
 						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
 						 
+						//add to database
+//						Class.forName(driver);
+//						Connection connection = DriverManager.getConnection(url);
 						//scrollPane for JTable
 						scrollPane.setBounds(45, 63, 359, 212);
 						getContentPane().add(scrollPane);
