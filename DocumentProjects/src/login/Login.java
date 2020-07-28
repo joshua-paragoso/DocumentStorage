@@ -22,12 +22,18 @@ public class Login {
 	private JFrame frame;
 	private JTextField username;
 	private JPasswordField password;
-
+	public static String driver = "com.mysql.cj.jdbc.Driver";
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
+		try 
+	    {
+	        Class.forName(driver);
+	    	System.out.println();
+			System.out.println("Connection to database successful\n");
+			EventQueue.invokeLater(new Runnable() {
 			/*
 			 * shows the login in frame
 			 */
@@ -43,6 +49,10 @@ public class Login {
 				}
 			}
 		});
+	    } catch (Exception e) {
+	        System.out.println("Connection to database failed\n");
+	        e.printStackTrace();
+	    }		
 	}
 
 	/**
@@ -73,7 +83,7 @@ public class Login {
 		lblUsername.setBounds(89, 116, 73, 16);
 		frame.getContentPane().add(lblUsername);
 		
-		//Username textField
+		//Username variable
 		username = new JTextField();
 		username.setBounds(161, 111, 130, 26);
 		frame.getContentPane().add(username);
@@ -84,7 +94,7 @@ public class Login {
 		lblPassword.setBounds(89, 167, 73, 21);
 		frame.getContentPane().add(lblPassword);
 	    
-		//PasswordField
+		//Password variable
 		password = new JPasswordField();
 		password.setBounds(161, 164, 130, 26);
 		frame.getContentPane().add(password);
@@ -96,7 +106,11 @@ public class Login {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					//String query = "SELC"
+				}catch(Exception a){
+			
+		        }
 				//if username space is empty
 				if( username.getText().isEmpty() || password.getText().isEmpty()) {
 					//display message
@@ -112,6 +126,8 @@ public class Login {
 					
 					//set Home window to visible 
 					home.setVisible(true);
+					
+					//close login window
 				    setVisble(false);
 				     			
 				}else {
