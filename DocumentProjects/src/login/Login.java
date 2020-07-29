@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ public class Login {
 	public String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
     public String uname = "root";
     public String pword = "gears114";
+    
 
 	/**
 	 * Launch the application.
@@ -115,21 +117,40 @@ public class Login {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				//variables to check the text from both username and password textfields
+				String n = username.getText();
+				String p = password.getText();
+				
+				System.out.println("Login button was pressed");
+				
 				try {
-					//String query = "SELC"
-				}catch(Exception a){
+					
+					//SQL statemet that searches through databases to check both username
+					//and password
+					String sql = "SELECT * FROM USERS WHERE userName =? AND passWord =?";
+					Connection connection = DriverManager.getConnection(ul, ur, pwd);
+					PreparedStatement statement = connection.prepareStatement(sql);
+					
+					
+					statement.setString(1, n);
+					statement.setString(2, p);
+					
+					ResultSet rs = statement.executeQuery();
 			
-		        }
-				//if username space is empty
-				if( username.getText().isEmpty() || password.getText().isEmpty()) {
+					//if username space is empty
+					if( username.getText().isEmpty() || password.getText().isEmpty()) {
+					
 					//display message
 					JOptionPane.showMessageDialog(null, "Please enter username and password");
 				
-				//if username and password match
-				}else if(username.getText().equals("joshua") && password.getText().contentEquals("gears114")){
+					//if username and password match
+					}else if(rs.next()){
+					
 					//display success message
 					JOptionPane.showMessageDialog(null, "login success");
 					String name1 = username.getText();
+					
 					//initialize Home object
 					Home home = new Home();
 					
@@ -139,44 +160,51 @@ public class Login {
 					//close login window
 				    setVisble(false);
 				     			
-				}else {
-					//display login failure message
-					JOptionPane.showMessageDialog(null, "login failed. Retry");
-				}
+					}else {
+						//display login failure message
+						JOptionPane.showMessageDialog(null, "login failed. Retry");
+					}
+				}catch(Exception a){}	
 			}
   
-			private void setVisble(boolean b) {
-			} 
+			private void setVisble(boolean b) {} 
 		
 		});
 		
 		//set bounds 
 		btnLogin.setBounds(89, 221, 117, 29);
 		frame.getContentPane().add(btnLogin);
-		
+	
+		//create button for creating a new user
 		JButton btnCreateUser = new JButton("Create User");
 		btnCreateUser.addActionListener(new ActionListener(){
        
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 String name = username.getText();
-//				 System.out.println(name);
-        
+				 
+				String name = username.getText();
 				 String pass = password.getText();
-//				 System.out.println(pass);
+
 				try {
 					insertUser(ul, ur, pwd, name, pass);
-				} catch (ClassNotFoundException | SQLException e1) {
+				}catch(ClassNotFoundException | SQLException e1) {
 					e1.printStackTrace();
 				}
 			}
-	});
+			});
+		
+		//set bounds for create user button
 		btnCreateUser.setBounds(235, 221, 117, 29);
 		frame.getContentPane().add(btnCreateUser);
 	}
 	
+	/*
+	 * insert user method used to insert new user to USER database
+	 */
 	public static void insertUser(String ul, String ur, String  pwd, String n, String p) throws ClassNotFoundException, SQLException {
+		
 		System.out.println("initiate user input into database");
+		
 		Class.forName(driver);
 		Connection connection = DriverManager.getConnection(ul, ur, pwd);
 		
