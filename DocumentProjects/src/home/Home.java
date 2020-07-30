@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import login.Login;
+
 import javax.swing.JTextField;
 import java.awt.Scrollbar;
 import javax.swing.JScrollPane;
@@ -33,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
 import java.sql.Connection;
@@ -48,6 +52,7 @@ public class Home extends JFrame {
 	private final JFileChooser openFileChooser; 
 	private BufferedImage originalBI;
 	private JTable table;
+	private JFrame frame;
 
 	public static String driver = "com.mysql.cj.jdbc.Driver"; 
 	public static String url = "jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false";
@@ -102,7 +107,7 @@ public class Home extends JFrame {
 		
 		//Display label which will indicate what file will be uploaded
 		JLabel messageLabel = new JLabel(" ");
-		messageLabel.setBounds(135, 23, 285, 24);
+		messageLabel.setBounds(151, 23, 112, 24);
 		getContentPane().add(messageLabel);
 		
 		//Upload button
@@ -127,9 +132,6 @@ public class Home extends JFrame {
 						//Added files name to data[][]
 						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
 						 
-						//add to database
-//						Class.forName(driver);
-//						Connection connection = DriverManager.getConnection(url);
 						//scrollPane for JTable
 						scrollPane.setBounds(45, 63, 359, 212);
 						getContentPane().add(scrollPane);
@@ -146,12 +148,38 @@ public class Home extends JFrame {
 		});
 		
 		//Upload button
-		btnUploadFile.setBounds(6, 22, 117, 29);
+		btnUploadFile.setBounds(151, 22, 117, 29);
 		getContentPane().add(btnUploadFile);
 		
 		//scrollPane for JTable
-		scrollPane.setBounds(45, 63, 359, 212);
+		scrollPane.setBounds(45, 63, 359, 240);
 		getContentPane().add(scrollPane);
-	
+		
+		JButton btnLogOut = new JButton("Log Out");
+		
+		btnLogOut.addActionListener(new ActionListener() {
+			/*
+			 * when btnOpenFile is pressed
+			 */
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "logged out successful");
+				System.out.println("login");
+				//initialize Home object
+				Login login = new Login();
+				
+				//set Home window to visible 
+				login.setVisible(true);
+				
+				//close login window
+				setVisble(false);
+			}
+
+			
+		});
+		btnLogOut.setBounds(151, 315, 112, 29);
+		getContentPane().add(btnLogOut);
+		
+		
 	}
+	public void setVisble(boolean b) {}
 }
