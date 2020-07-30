@@ -158,7 +158,8 @@ public class Login {
 					home.setVisible(true);
 					
 					//close login window
-				    setVisble(false);
+				    frame.dispose();
+//					setVisble(false);
 				     			
 					}else {
 						//display login failure message
@@ -222,4 +223,6 @@ public class Login {
 		}
 		System.out.println("insert successful");
 	}
+
+	public void setVisible(boolean b) {}
 }
