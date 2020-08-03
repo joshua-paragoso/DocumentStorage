@@ -24,7 +24,7 @@ import home.Home;
 
 public class Login {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField username;
 	private JPasswordField password;
 	public static String driver = "com.mysql.cj.jdbc.Driver";
@@ -41,9 +41,7 @@ public class Login {
 		
 		try 
 	    {
-	        Class.forName(driver);
-	    	System.out.println();
-			System.out.println("Connection to database successful\n");
+
 			EventQueue.invokeLater(new Runnable() {
 			/*
 			 * shows the login in frame
@@ -146,7 +144,9 @@ public class Login {
 				
 					//if username and password match
 					}else if(rs.next()){
-					
+						Class.forName(driver);
+				    	System.out.println();
+						System.out.println("Connection to database successful\n");
 					//display success message
 					JOptionPane.showMessageDialog(null, "login success");
 					String name1 = username.getText();
