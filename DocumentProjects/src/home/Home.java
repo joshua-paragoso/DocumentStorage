@@ -107,7 +107,7 @@ public class Home extends JFrame {
 		
 		//Display label which will indicate what file will be uploaded
 		JLabel messageLabel = new JLabel(" ");
-		messageLabel.setBounds(151, 23, 112, 24);
+		messageLabel.setBounds(109, 29, 227, 22);
 		getContentPane().add(messageLabel);
 		
 		//Upload button
@@ -129,6 +129,7 @@ public class Home extends JFrame {
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
 						
+						System.out.println("File added");
 						//Added files name to data[][]
 						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
 						 
@@ -148,7 +149,7 @@ public class Home extends JFrame {
 		});
 		
 		//Upload button
-		btnUploadFile.setBounds(151, 22, 117, 29);
+		btnUploadFile.setBounds(37, 315, 117, 29);
 		getContentPane().add(btnUploadFile);
 		
 		//scrollPane for JTable
@@ -163,12 +164,15 @@ public class Home extends JFrame {
 			 */
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "logged out successful");
-				System.out.println("login");
-				//initialize Home object
-				Login login = new Login();
+				System.out.println("log out successfull");
 				
-				//set Home window to visible 
-				login.setVisible(true);
+				dispose();
+				
+				//initialize Home object
+				Login newLogin = new Login();
+				
+				//set login window to visible 
+				newLogin.frame.setVisible(true);
 				
 				//close login window
 				setVisble(false);
@@ -176,7 +180,7 @@ public class Home extends JFrame {
 
 			
 		});
-		btnLogOut.setBounds(151, 315, 112, 29);
+		btnLogOut.setBounds(299, 315, 112, 29);
 		getContentPane().add(btnLogOut);
 		
 		
