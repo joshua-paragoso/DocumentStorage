@@ -113,10 +113,16 @@ public class Home extends JFrame {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			String sql = "SELECT * FROM FILES WHERE userName =?";
 			Connection con = DriverManager.getConnection(url, uname, pword);
 			Statement ps = con.createStatement();
-			ResultSet rs = ps.executeQuery ("select * from FILES WHERE userName='trycen'");
-//			ResultSet rs = ps.executeQuery ("select * from FILES WHERE userName=' " + name + "'");
+			PreparedStatement statement = connection.prepareStatement(sql);
+			
+			String uName = name;
+			statement.setString(1, uName);
+			
+			ResultSet rs = statement.executeQuery();
+
 			while(rs.next()) {
 				String fileName = rs.getString("fileName");
 				System.out.println(fileName);
