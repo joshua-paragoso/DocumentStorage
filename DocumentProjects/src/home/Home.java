@@ -52,21 +52,27 @@ public class Home extends JFrame {
 	private final JFileChooser openFileChooser; 
 	private BufferedImage originalBI;
 	private JTable table;
-	private JFrame frame;
+	private static JFrame frame;
 
 	public static String driver = "com.mysql.cj.jdbc.Driver"; 
 	public static String url = "jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false";
+	
+	PreparedStatement ps;
+	Connection connection;
+	
+	String userBelongs; 
+	static String name;
+
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		
-		
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Home frame = new Home();
+					
+					Home frame = new Home(name);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,9 +84,9 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Home() {
-		
-
+	public Home(String name) {
+			
+		setTitle(name + "'s files");
 		//JScrollPane 
 		JScrollPane scrollPane = new JScrollPane();
 		
@@ -119,17 +125,26 @@ public class Home extends JFrame {
 			 */
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = openFileChooser.showOpenDialog(null);
-				
+				 try {
+					ps = connection.prepareStatement("select * from emp where UNAME='"  + "'");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
-						//find file
+						 Class.forName("com.mysql.cj.jdbc.Driver");
+				         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/EMP?autoReconnect=true&useSSL=false", "root", "gears114");
+						
+				         //find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
 						
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
 						
 						System.out.println("File added");
+						
 						//Added files name to data[][]
 						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
 						 
@@ -140,6 +155,12 @@ public class Home extends JFrame {
 					}catch (IOException ioe) {
 						//if file find fails
 						messageLabel.setText("File find fail");
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}else {
 					//if no files were chosen
@@ -160,7 +181,7 @@ public class Home extends JFrame {
 		
 		btnLogOut.addActionListener(new ActionListener() {
 			/*
-			 * when btnOpenFile is pressed
+			 * when logout button is pressed
 			 */
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "logged out successful");
@@ -178,7 +199,6 @@ public class Home extends JFrame {
 				setVisble(false);
 			}
 
-			
 		});
 		btnLogOut.setBounds(299, 315, 112, 29);
 		getContentPane().add(btnLogOut);
