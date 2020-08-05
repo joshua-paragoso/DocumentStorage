@@ -123,7 +123,7 @@ public class Login {
 				System.out.println("Login button was pressed");
 				
 				try {
-					
+					System.out.println(n);
 					//SQL statemet that searches through databases to check both username
 					//and password
 					String sql = "SELECT * FROM USERS WHERE userName =? AND passWord =?";
@@ -147,12 +147,14 @@ public class Login {
 						Class.forName(driver);
 				    	System.out.println();
 						System.out.println("Connection to database successful\n");
+					String name1 = username.getText();	
 					//display success message
-					JOptionPane.showMessageDialog(null, "login success");
-					String name1 = username.getText();
+					JOptionPane.showMessageDialog(null, "Welcome " + name1 );
+					
+					
 					
 					//initialize Home object
-					Home home = new Home();
+					Home home = new Home(name1);
 					
 					//set Home window to visible 
 					home.setVisible(true);
