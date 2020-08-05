@@ -154,7 +154,7 @@ public class Login {
 					
 					
 					//initialize Home object
-					Home home = new Home(name1);
+					Home home = new Home(name1,connection);
 					
 					//set Home window to visible 
 					home.setVisible(true);
