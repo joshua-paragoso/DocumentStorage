@@ -1,16 +1,35 @@
 package home;
 
+import login.Login;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.List;
+import java.awt.Component;
+import java.awt.CardLayout;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-
-import login.Login;
-
+import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Scrollbar;
 import javax.swing.JScrollPane;
@@ -19,26 +38,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
-import java.awt.List;
-import java.awt.Component;
 
-import javax.imageio.ImageIO;
-import javax.swing.Box;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JCheckBox;
-import javax.swing.JTextPane;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -46,6 +46,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 public class Home extends JFrame {
 	
 	//JFile Choosers
@@ -55,10 +56,12 @@ public class Home extends JFrame {
 	private static JFrame frame;
 
 	public static String driver = "com.mysql.cj.jdbc.Driver"; 
-	public static String url = "jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false";
-	
+	public static String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
+    public String uname = "root";
+    public String pword = "gears114";
+    
 	PreparedStatement ps;
-	Connection connection;
+	static Connection connection;
 	
 	String userBelongs; 
 	static String name;
@@ -72,7 +75,7 @@ public class Home extends JFrame {
 			public void run() {
 				try {
 					
-					Home frame = new Home(name);
+					Home frame = new Home(name, connection);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,8 +86,9 @@ public class Home extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param connection2 
 	 */
-	public Home(String name) {
+	public Home(String name, Connection connection) {
 			
 		setTitle(name + "'s files");
 		//JScrollPane 
@@ -105,7 +109,26 @@ public class Home extends JFrame {
 		
 		//Set directory to Desktop
 		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
+		
 
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url, uname, pword);
+			Statement ps = con.createStatement();
+			ResultSet rs = ps.executeQuery ("select * from FILES WHERE userName='trycen'");
+//			ResultSet rs = ps.executeQuery ("select * from FILES WHERE userName=' " + name + "'");
+			while(rs.next()) {
+				String fileName = rs.getString("fileName");
+				System.out.println(fileName);
+			}
+			
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//Set bounds of
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 400);
@@ -125,17 +148,12 @@ public class Home extends JFrame {
 			 */
 			public void actionPerformed(ActionEvent e) {
 				int returnValue = openFileChooser.showOpenDialog(null);
-				 try {
-					ps = connection.prepareStatement("select * from emp where UNAME='"  + "'");
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				 
 				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
 						 Class.forName("com.mysql.cj.jdbc.Driver");
-				         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/EMP?autoReconnect=true&useSSL=false", "root", "gears114");
+//				         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false", "root", "gears114");
 						
 				         //find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
@@ -156,9 +174,6 @@ public class Home extends JFrame {
 						//if file find fails
 						messageLabel.setText("File find fail");
 					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -205,5 +220,7 @@ public class Home extends JFrame {
 		
 		
 	}
+
+
 	public void setVisble(boolean b) {}
 }
