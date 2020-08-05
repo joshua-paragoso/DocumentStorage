@@ -1,4 +1,12 @@
 CREATE TABLE USERS (
 userName VARCHAR(10),
-passWord VARCHAR(10)
+passWord VARCHAR(10),
+PRIMARY KEY (userName)
+);
+
+CREATE TABLE FILES (
+userName VARCHAR(10),
+fileName VARCHAR(25),
+PRIMARY KEY (userName),
+FOREIGN KEY (userName) REFERENCES USERS(userName)
 );
