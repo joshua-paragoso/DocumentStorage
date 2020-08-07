@@ -122,11 +122,14 @@ public class Home extends JFrame {
 			statement.setString(1, uName);
 			
 			ResultSet rs = statement.executeQuery();
-
+			int i = 0;
 			while(rs.next()) {
 				String fileName = rs.getString("fileName");
 				System.out.println(fileName);
+				i++;
+//				tableModel.insertRow(i, new Object[] {fileName});
 			}
+			System.out.println(i);
 			
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
@@ -159,13 +162,27 @@ public class Home extends JFrame {
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
 					try {
 						 Class.forName("com.mysql.cj.jdbc.Driver");
-//				         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/FILES?autoReconnect=true&useSSL=false", "root", "gears114");
+				         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false", "root", "gears114");
 						
 				         //find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
 						
+						/*sql statement */
+						String sql = "INSERT INTO FILES(userName, fileName) VALUES (?, ?)";
+						PreparedStatement statement = connection.prepareStatement(sql);
+						
+						statement.setString(1, name); //User
+						statement.setString(2, "upload.txt"); //NAME
+
+						/* state that row was entered into database */
+						int rows = statement.executeUpdate();
+						if(rows > 0) { 
+							System.out.println("A row has been inserted");
+						}
+						
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
+						
 						
 						System.out.println("File added");
 						
@@ -180,6 +197,9 @@ public class Home extends JFrame {
 						//if file find fails
 						messageLabel.setText("File find fail");
 					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
