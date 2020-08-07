@@ -28,7 +28,7 @@ public class Login {
 	private JTextField username;
 	private JPasswordField password;
 	public static String driver = "com.mysql.cj.jdbc.Driver";
-	public String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
+	public static String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
     public String uname = "root";
     public String pword = "gears114";
     
