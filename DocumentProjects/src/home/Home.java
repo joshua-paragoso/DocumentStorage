@@ -112,8 +112,10 @@ public class Home extends JFrame {
 		
 
 		try {
+			
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String sql = "SELECT * FROM FILES WHERE userName =?";
+			
 			Connection con = DriverManager.getConnection(url, uname, pword);
 			Statement ps = con.createStatement();
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -122,12 +124,15 @@ public class Home extends JFrame {
 			statement.setString(1, uName);
 			
 			ResultSet rs = statement.executeQuery();
+			
 			int i = 0;
+			
 			while(rs.next()) {
 				String fileName = rs.getString("fileName");
 				System.out.println(fileName);
 				i++;
 //				tableModel.insertRow(i, new Object[] {fileName});
+				tableModel.addRow(new Object[] {fileName});
 			}
 			System.out.println(i);
 			
