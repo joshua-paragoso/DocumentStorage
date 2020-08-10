@@ -168,11 +168,11 @@ public class Home extends JFrame {
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
 						
 						/*sql statement */
-						String sql = "INSERT INTO FILES(userName, fileName) VALUES (?, ?)";
+						String sql = "INSERT INTO FILES (userName, fileName) VALUES (?, ?)";
 						PreparedStatement statement = connection.prepareStatement(sql);
 						
 						statement.setString(1, name); //User
-						statement.setString(2, "upload.txt"); //NAME
+						statement.setString(2, openFileChooser.getSelectedFile().getName()); //NAME
 
 						/* state that row was entered into database */
 						int rows = statement.executeUpdate();
