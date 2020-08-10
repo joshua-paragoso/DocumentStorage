@@ -72,20 +72,30 @@ public class Home extends JFrame {
 	public static void main(String[] args) {
 		
 		EventQueue.invokeLater(new Runnable() {
+			/**
+			 * run home.java
+			 */
 			public void run() {
-				try {
+				try
+				{
 					
+					//home object
 					Home frame = new Home(name, connection);
+					
+					//set home page to visible
 					frame.setVisible(true);
-				} catch (Exception e) {
+					
+				}catch (Exception e) {
+					
 					e.printStackTrace();
+				
 				}
 			}
 		});
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the frame for home
 	 * @param connection2 
 	 */
 	public Home(String name, Connection connection) {
@@ -113,25 +123,37 @@ public class Home extends JFrame {
 
 		try {
 			
+			//driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			//sql command for finding files belonging to user
 			String sql = "SELECT * FROM FILES WHERE userName =?";
 			
-			Connection con = DriverManager.getConnection(url, uname, pword);
-			Statement ps = con.createStatement();
+			//prepared statment for sql command
 			PreparedStatement statement = connection.prepareStatement(sql);
 			
+			//uName is name of user
 			String uName = name;
+			
+			//set username
 			statement.setString(1, uName);
 			
+			//ResultSet used fpr execution of query
 			ResultSet rs = statement.executeQuery();
 			
+			//used for keeping track of the # of docuemnts user has on file
 			int i = 0;
 			
 			while(rs.next()) {
+				
+				//fileName will be name of file
 				String fileName = rs.getString("fileName");
 				System.out.println(fileName);
+				
+				//increment i
 				i++;
-//				tableModel.insertRow(i, new Object[] {fileName});
+				
+				//add row to table model
 				tableModel.addRow(new Object[] {fileName});
 			}
 			System.out.println(i);
@@ -157,7 +179,7 @@ public class Home extends JFrame {
 		JButton btnUploadFile = new JButton("Upload file");
 		btnUploadFile.addActionListener(new ActionListener() {
 			
-			/*
+			/**
 			 * when btnOpenFile is pressed
 			 */
 			public void actionPerformed(ActionEvent e) {
@@ -165,33 +187,45 @@ public class Home extends JFrame {
 				 
 				//if returnValue is true
 				if(returnValue == JFileChooser.APPROVE_OPTION) { 
-					try {
-						 Class.forName("com.mysql.cj.jdbc.Driver");
-				         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false", "root", "gears114");
+					try{
 						
-				         //find file
+						//driver
+						Class.forName("com.mysql.cj.jdbc.Driver");
+				        
+						//connection
+						Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false", "root", "gears114");
+						
+				        //find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
 						
-						/*sql statement */
+						//sql statement
 						String sql = "INSERT INTO FILES (userName, fileName) VALUES (?, ?)";
+						
+						//prepared statment to execute sql command
 						PreparedStatement statement = connection.prepareStatement(sql);
 						
-						statement.setString(1, name); //User
+						//set username
+						statement.setString(1, name);
+						
+						//set name of file
 						statement.setString(2, openFileChooser.getSelectedFile().getName()); //NAME
 
-						/* state that row was entered into database */
+						//row is 1 if prepared statement is successfully executed
 						int rows = statement.executeUpdate();
-						if(rows > 0) { 
+						
+						//if rows i 1, print successful row insert
+						if(rows > 0) {
+							
 							System.out.println("A row has been inserted");
+						
 						}
 						
 						//print out that file was found
 						messageLabel.setText(openFileChooser.getSelectedFile().getName() + " successfully loaded");
 						
-						
 						System.out.println("File added");
 						
-						//Added files name to data[][]
+						//Added filesNames to JTabel to be displayed
 						tableModel.insertRow(0, new Object[] {openFileChooser.getSelectedFile().getName()});
 						 
 						//scrollPane for JTable
@@ -199,18 +233,23 @@ public class Home extends JFrame {
 						getContentPane().add(scrollPane);
 						 	
 					}catch (IOException ioe) {
+						
 						//if file find fails
 						messageLabel.setText("File find fail");
+						
 					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
+						
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
+						
 						e1.printStackTrace();
 					}
 				}else {
+					
 					//if no files were chosen
 					messageLabel.setText("No file chosen!");
+				
 				}
 			}
 		});
@@ -223,22 +262,27 @@ public class Home extends JFrame {
 		scrollPane.setBounds(45, 63, 359, 240);
 		getContentPane().add(scrollPane);
 		
+		//logOut button
 		JButton btnLogOut = new JButton("Log Out");
 		
 		btnLogOut.addActionListener(new ActionListener() {
-			/*
-			 * when logout button is pressed
+			
+			/**
+			 * actionPerformed when logout button is pressed
 			 */
 			public void actionPerformed(ActionEvent e) {
+				
+				//display message that user has logged out
 				JOptionPane.showMessageDialog(null, "logged out successful");
 				System.out.println("log out successfull");
 				
+				//close current window
 				dispose();
 				
-				//initialize Home object
+				//initialize a Home object
 				Login newLogin = new Login();
 				
-				//set login window to visible 
+				//set new login window to visible 
 				newLogin.frame.setVisible(true);
 				
 				//close login window
@@ -249,9 +293,11 @@ public class Home extends JFrame {
 		btnLogOut.setBounds(299, 315, 112, 29);
 		getContentPane().add(btnLogOut);
 		
-		
 	}
 
-
+	/**
+	 * set visible method
+	 * @param b
+	 */
 	public void setVisble(boolean b) {}
 }
