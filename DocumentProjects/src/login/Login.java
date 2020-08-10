@@ -186,7 +186,7 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				 
 				String name = username.getText();
-				 String pass = password.getText();
+				String pass = password.getText();
 
 				try {
 					insertUser(ul, ur, pwd, name, pass);
