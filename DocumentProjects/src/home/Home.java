@@ -55,11 +55,17 @@ public class Home extends JFrame {
 	private JTable table;
 	private static JFrame frame;
 
-	public static String driver = "com.mysql.cj.jdbc.Driver"; 
+//	public static String driver = "com.mysql.cj.jdbc.Driver"; 
+//	public static String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
+//    public String uname = "root";
+//    public String pword = "Gears114??";
+    
+	public static String driver = "com.mysql.cj.jdbc.Driver";
 	public static String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
     public String uname = "root";
-    public String pword = "gears114";
+    public String pword = "Gears114??";
     
+	
 	PreparedStatement ps;
 	static Connection connection;
 	
@@ -118,7 +124,8 @@ public class Home extends JFrame {
 		openFileChooser = new JFileChooser();
 		
 		//Set directory to Desktop
-		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
+//		openFileChooser.setCurrentDirectory(new File("/Users/joshypuu/Desktop"));
+		openFileChooser.setCurrentDirectory(new File("C:/Users/parag/Desktop"));
 		
 
 		try {
@@ -193,14 +200,13 @@ public class Home extends JFrame {
 						Class.forName("com.mysql.cj.jdbc.Driver");
 				        
 						//connection
-						Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false", "root", "gears114");
+						Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false", "root", "Gears114??");
 						
 				        //find file
 						originalBI = ImageIO.read(openFileChooser.getSelectedFile());
 						
 						//sql statement
 						String sql = "INSERT INTO FILES (userName, fileName) VALUES (?, ?)";
-						
 						//prepared statment to execute sql command
 						PreparedStatement statement = connection.prepareStatement(sql);
 						
@@ -216,7 +222,7 @@ public class Home extends JFrame {
 						//if rows i 1, print successful row insert
 						if(rows > 0) {
 							
-							System.out.println("A row has been inserted");
+							System.out.println("A file has been inserted");
 						
 						}
 						

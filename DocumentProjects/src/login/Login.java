@@ -30,7 +30,7 @@ public class Login {
 	public static String driver = "com.mysql.cj.jdbc.Driver";
 	public static String url = "jdbc:mysql://localhost:3306/USERS?autoReconnect=true&useSSL=false";
     public String uname = "root";
-    public String pword = "gears114";
+    public String pword = "Gears114??";
     
 
 	/**
@@ -254,7 +254,7 @@ public class Login {
 		
 		//if rows is greater than 0, print row was inserted 
 		if(rows > 0) { 
-			System.out.println("A row has been inserted");
+			System.out.println("A user has been inserted");
 		}
 		
 		System.out.println("insert successful");
